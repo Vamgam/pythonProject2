@@ -15,7 +15,7 @@ def hist():
         def expand():
             global n
             n += 1
-            a.append(Entry())
+            a.append(Label(text=str(n+1)))
             b.append(Entry())
             a[n].grid(row=4 + n, column=1, sticky="w")
             b[n].grid(row=4 + n, column=2, sticky="w")
@@ -41,8 +41,8 @@ def hist():
             x = []
             y = []
             for i in range(len(a)):
-                x.append(np.double(a[i].get()))
-                y.append(np.double(b[i].get()))
+                x.append(np.double(b[i].get()))
+
             x = np.asarray(x)
             y = np.asarray(y)
             xlabel = name_entry.get()
@@ -51,26 +51,13 @@ def hist():
             ylabel = 'r"' + ylabel
             xlabel = xlabel + '"'
             ylabel = ylabel + '"'
-            x1 = np.arange(x[0], x[np.size(x) - 1], 0.0001)
-            fig, ax = plt.subplots()
-            ax.hist (x, y, 'ro')
-            ax.minorticks_on()
-            ax.grid(which='major',
-                    color='k',
-                    linewidth=2)
-            ax.grid(which='minor',
-                    color='k',
-                    linestyle=':')
+            n, bins, patches = plt.hist(x, x.size, density=True, facecolor='red')
             plt.xlabel(xlabel)
             plt.ylabel(ylabel)
-            fig.set_figwidth(12)
-            fig.set_figheight(6)
-            plt.savefig("graph.jpg")
-            img1 = imgtk.PhotoImage(img.open("graph.jpg"))
-            panel = Label(root, image=img1)
-            panel.pack(side="bottom", fill="both", expand="yes")
+            plt.grid(True)
+            plt.show()
 
-        a = [Entry()]
+        a = [Label(text=str(n+1))]
         b = [Entry()]
 
         a[0].grid(row=4, column=1, sticky="w")
